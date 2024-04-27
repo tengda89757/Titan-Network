@@ -23,3 +23,6 @@ wget -O xiaomei.sh https://raw.githubusercontent.com/tengda89757/Titan-Network/m
 
 小美的美女闺蜜但不知道多美专用：
 wget -O guimi.sh https://raw.githubusercontent.com/tengda89757/Titan-Network/main/guimi.sh && chmod +x guimi.sh && ./guimi.sh
+
+
+M 老哥专用：wget -O m.sh https://raw.githubusercontent.com/tengda89757/Titan-Network/main/m.sh && chmod +x m.sh && ./m.sh
