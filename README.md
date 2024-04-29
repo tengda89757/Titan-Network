@@ -1,5 +1,7 @@
 
-docker stop $(docker ps -aq) && docker rm $(docker ps -aq) 
+docker stop $(docker ps -aq) 
+
+docker rm $(docker ps -aq) 
 
 wget -O duokai.sh https://raw.gitmirror.com/tengda89757/Titan-Network/main/duokai.sh && chmod +x duokai.sh && ./duokai.sh
 
