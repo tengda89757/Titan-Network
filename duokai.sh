@@ -20,7 +20,7 @@ id="E68A16A8-3294-4C6C-BBC7-623ECABD1FD7"
 container_count=1
 
 # 让用户输入想要分配的空间大小
-storage_gb=40
+storage_gb=34
 
 apt update
 
