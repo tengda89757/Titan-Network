@@ -17,10 +17,10 @@ echo "节点社区 Discord 社群:https://discord.gg/GbMV5EcNWF"
 id="E68A16A8-3294-4C6C-BBC7-623ECABD1FD7"
 
 # 让用户输入想要创建的容器数量
-container_count=5
+container_count=1
 
 # 让用户输入想要分配的空间大小
-storage_gb=7
+storage_gb=40
 
 apt update
 
@@ -35,6 +35,10 @@ then
 else
     echo "Docker 已安装。"
 fi
+
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
 
 # 拉取Docker镜像
 docker pull nezha123/titan-edge:1.4
