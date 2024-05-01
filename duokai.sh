@@ -17,10 +17,10 @@ echo "节点社区 Discord 社群:https://discord.gg/GbMV5EcNWF"
 id="E68A16A8-3294-4C6C-BBC7-623ECABD1FD7"
 
 # 让用户输入想要创建的容器数量
-container_count=1
+container_count=5
 
 # 让用户输入想要分配的空间大小
-storage_gb=34
+storage_gb=7
 
 apt update
 
