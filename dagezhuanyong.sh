@@ -64,18 +64,17 @@ done
 docker restart $(docker ps -a -q)
 echo "==============================所有节点均已设置并启动===================================."
 
+cd apphub-linux-386/
 
-curl -o apphub-linux-386.tar.gz https://assets.coreservice.io/public/package/70/app-market-gaga-pro/1.0.4/app-market-gaga-pro-1_0_4.tar.gz && tar -zxf apphub-linux-386.tar.gz && rm -f apphub-linux-386.tar.gz && cd ./apphub-linux-386
-sleep 5
+./apphub service stop
 
-sudo ./apphub service remove && sudo ./apphub service install
-sleep 5
+cd ..
 
-sudo ./apphub service start
-sleep 15
 
-./apphub status
-sleep 5
-sudo ./apps/gaganode/gaganode config set --token=lmtqbgacxignzazlae462ebd0115cab6
-sleep 5
-./apphub restart
+wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn
+
+sudo ./meson_cdn config set --token=qqyethyncykfckpx5b2568da0c51ee86 --https_port=443 --cache.size=30
+
+sudo ./service start meson_cdn
+
+docker restart $(docker ps -a -q)
