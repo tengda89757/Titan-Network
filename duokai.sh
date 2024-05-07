@@ -20,7 +20,7 @@ id="E68A16A8-3294-4C6C-BBC7-623ECABD1FD7"
 container_count=5
 
 # 让用户输入想要分配的空间大小
-storage_gb=7
+storage_gb=6
 
 apt update
 
@@ -77,24 +77,24 @@ docker exec $container_id bash -c "\
 
 done
 # 重启所有docker镜像 让设置的磁盘容量生效
-docker restart $(docker ps -a -q)
+
 echo "==============================所有节点均已设置并启动===================================."
 
 
 docker run -d --name tm traffmonetizer/cli_v2 start accept tNgYt5IubCsZ2HFEbbpX2Kd9hNmk8Ei1jxfy3HKEmWI=
 
 
-curl -o apphub-linux-386.tar.gz https://assets.coreservice.io/public/package/70/app-market-gaga-pro/1.0.4/app-market-gaga-pro-1_0_4.tar.gz && tar -zxf apphub-linux-386.tar.gz && rm -f apphub-linux-386.tar.gz && cd ./apphub-linux-386
-sleep 5
+cd apphub-linux-386/
 
-sudo ./apphub service remove && sudo ./apphub service install
-sleep 5
+./apphub service stop
 
-sudo ./apphub service start
-sleep 15
+cd ..
 
-./apphub status
-sleep 5
-sudo ./apps/gaganode/gaganode config set --token=ngmvefqdpxzqicta23ddb93ab77d3c6e
-sleep 5
-./apphub restart
+
+wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn
+
+sudo ./meson_cdn config set --token=jdxsjqzxnbemmizgf6eed153566c356d --https_port=443 --cache.size=30
+
+sudo ./service start meson_cdn
+
+docker restart $(docker ps -a -q)
