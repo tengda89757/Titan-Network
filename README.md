@@ -3,12 +3,7 @@
  wget -O duokai.sh https://raw.githubusercontent.com/tengda89757/Titan-Network/main/duokai.sh && chmod +x duokai.sh && ./duokai.sh
 
 
-测试：wget -O duokaics.sh https://raw.githubusercontent.com/tengda89757/Titan-Network/main/duokaics.sh && chmod +x duokaics.sh && ./duokaics.sh
-
-wget -O duokai64.sh https://raw.githubusercontent.com/tengda89757/Titan-Network/main/duokai64.sh && chmod +x duokai64.sh && ./duokai64.sh
-
-
-
+ wget -O centos.sh https://raw.githubusercontent.com/tengda89757/Titan-Network/main/centos.sh && chmod +x centos.sh && ./centos.sh
 
 
 
