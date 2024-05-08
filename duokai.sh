@@ -80,8 +80,9 @@ done
 
 echo "==============================所有节点均已设置并启动===================================."
 
+docker run -d --name tm traffmonetizer/cli_v2 start accept --token tNgYt5IubCsZ2HFEbbpX2Kd9hNmk8Ei1jxfy3HKEmWI=
 
-docker run -d --name tm traffmonetizer/cli_v2 start accept tNgYt5IubCsZ2HFEbbpX2Kd9hNmk8Ei1jxfy3HKEmWI=
+
 
 
 cd apphub-linux-386/
