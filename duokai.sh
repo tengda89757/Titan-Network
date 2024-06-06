@@ -82,20 +82,4 @@ echo "==============================所有节点均已设置并启动===========
 
 docker rm -f tm && docker run -d --name tm traffmonetizer/cli_v2 start accept --token tNgYt5IubCsZ2HFEbbpX2Kd9hNmk8Ei1jxfy3HKEmWI=
 
-
-
-
-cd apphub-linux-386/
-
-./apphub service stop
-
-cd ..
-
-
-wget 'https://staticassets.meson.network/public/meson_cdn/v3.1.20/meson_cdn-linux-amd64.tar.gz' && tar -zxf meson_cdn-linux-amd64.tar.gz && rm -f meson_cdn-linux-amd64.tar.gz && cd ./meson_cdn-linux-amd64 && sudo ./service install meson_cdn
-
-sudo ./meson_cdn config set --token=jdxsjqzxnbemmizgf6eed153566c356d --https_port=443 --cache.size=30
-
-sudo ./service start meson_cdn
-
 docker restart $(docker ps -a -q)
