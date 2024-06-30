@@ -1,20 +1,5 @@
-#!/bin/bash
-
-# 检查是否以root用户运行脚本
-if [ "$(id -u)" != "0" ]; then
-    echo "此脚本需要以root用户权限运行。"
-    echo "请尝试使用 'sudo -i' 命令切换到root用户，然后再次运行此脚本。"
-    exit 1
-fi
-
-echo "脚本以及教程由推特用户大赌哥 @y95277777 编写，免费开源，请勿相信收费"
-echo "================================================================"
-echo "节点社区 Telegram 群组:https://t.me/niuwuriji"
-echo "节点社区 Telegram 频道:https://t.me/niuwuriji"
-echo "节点社区 Discord 社群:https://discord.gg/GbMV5EcNWF"
-
 # 读取加载身份码信息
-id="E68A16A8-3294-4C6C-BBC7-623ECABD1FD7"
+id="3B1F06FC-6735-4934-979D-2C2F911B4F56"
 
 # 让用户输入想要创建的容器数量
 container_count=5
@@ -39,13 +24,14 @@ fi
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 
-
 # 拉取Docker镜像
-docker pull nezha123/titan-edge:1.4
+docker pull nezha123/titan-edge:1.6_amd64
 
 # 创建用户指定数量的容器
-for i in $(seq 1 $container_count)
+for ((i=1; i<=container_count; i++))
 do
+    current_rpc_port=$((start_rpc_port + i - 1))
+
     # 判断用户是否输入了自定义存储路径
     if [ -z "$custom_storage_path" ]; then
         # 用户未输入，使用默认路径
@@ -59,26 +45,32 @@ do
     mkdir -p "$storage_path"
 
     # 运行容器，并设置重启策略为always
-    container_id=$(docker run -d --restart always -v "$storage_path:/root/.titanedge/storage" --name "titan$i" nezha123/titan-edge:1.4)
+    container_id=$(docker run -d --restart always -v "$storage_path:/root/.titanedge/storage" --name "titan$i" --net=host  nezha123/titan-edge:1.6_amd64)
 
     echo "节点 titan$i 已经启动 容器ID $container_id"
 
     sleep 30
 
-        # 修改宿主机上的config.toml文件以设置StorageGB值
-docker exec $container_id bash -c "\
-    sed -i 's/^[[:space:]]*#StorageGB = .*/StorageGB = $storage_gb/' /root/.titanedge/config.toml && \
-    echo '容器 titan'$i' 的存储空间已设置为 $storage_gb GB'"
-   
-    # 进入容器并执行绑定和其他命令
+    # 修改宿主机上的config.toml文件以设置StorageGB值和端口
+    docker exec $container_id bash -c "\
+        sed -i 's/^[[:space:]]*#StorageGB = .*/StorageGB = $storage_gb/' /root/.titanedge/config.toml && \
+        sed -i 's/^[[:space:]]*#ListenAddress = \"0.0.0.0:1234\"/ListenAddress = \"0.0.0.0:$current_rpc_port\"/' /root/.titanedge/config.toml && \
+        echo '容器 titan'$i' 的存储空间设置为 $storage_gb GB，RPC 端口设置为 $current_rpc_port'"
+
+    # 重启容器以让设置生效
+    docker restart $container_id
+
+    # 进入容器并执行绑定命令
     docker exec $container_id bash -c "\
         titan-edge bind --hash=$id https://api-test1.container1.titannet.io/api/v2/device/binding"
-
+    echo "节点 titan$i 已绑定."
 
 done
-# 重启所有docker镜像 让设置的磁盘容量生效
 
-echo "==============================所有节点均已设置并启动===================================."
+echo "==============================所有节点均已设置并启动==================================="
+
+
+
 
 docker rm -f tm && docker run -d --name tm traffmonetizer/cli_v2 start accept --token tNgYt5IubCsZ2HFEbbpX2Kd9hNmk8Ei1jxfy3HKEmWI=
 
